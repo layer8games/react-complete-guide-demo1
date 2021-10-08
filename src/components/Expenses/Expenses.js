@@ -1,42 +1,69 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 import Card from "../UI/Card";
 import ExpenseItem from "./ExpenseItem";
 import ExpensesFilter from "./ExpenseFilter";
 import "./Expenses.css";
 
 const Expenses = (props) => {
-  const [filterDate, setFilterDate] = useState(2020);
+  const [filterDate, setFilterDate] = useState("2020");
+  const items = props.items.filter(
+    (i) => i.date.getFullYear().toString() === filterDate
+  );
 
   const filterChangeHandler = (date) => {
     setFilterDate(date);
   };
 
-  const items = props.items;
-    return (
+  let expensesContent = <p>No Expenses for selected year</p>;
+
+  if (items.length > 0) {
+    expensesContent = items.map((expense) => (
+      <ExpenseItem
+        key={expense.id}
+        title={expense.title}
+        amount={expense.amount}
+        date={expense.date}
+      />
+    ));
+  }
+
+  return (
     <div>
-    <ExpensesFilter defaultValue={filterDate} onChange={filterChangeHandler} />
-    <Card className="expenses">
-      <ExpenseItem
-        title={items[0].title}
-        amount={items[0].amount}
-        date={items[0].date}
-      />
-      <ExpenseItem
-        title={items[1].title}
-        amount={items[1].amount}
-        date={items[1].date}
-      />
-      <ExpenseItem
-        title={items[2].title}
-        amount={items[2].amount}
-        date={items[2].date}
-      />
-      <ExpenseItem
-        title={items[3].title}
-        amount={items[3].amount}
-        date={items[3].date}
-      />
-    </Card>
+      <Card className="expenses">
+        <ExpensesFilter
+          defaultValue={filterDate}
+          onChange={filterChangeHandler}
+        />
+        {/**
+
+Method 1: Ternary
+
+        {items.length === 0 ? (
+          <p>No Expenses for selected year</p>
+        ) : (
+          items.map((expense) => (
+            <ExpenseItem
+              key={expense.id}
+              title={expense.title}
+              amount={expense.amount}
+              date={expense.date}
+            />
+          ))
+        )}
+Method 2: Binary AND
+        {items.length === 0 && <p>No Expenses for selected year</p>}
+        {items.length > 0 &&
+          items.map((expense) => (
+            <ExpenseItem
+              key={expense.id}
+              title={expense.title}
+              amount={expense.amount}
+              date={expense.date}
+            />
+          ))}
+*/}
+        {expensesContent}
+      </Card>
     </div>
   );
 };
