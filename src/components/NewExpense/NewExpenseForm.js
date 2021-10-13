@@ -39,7 +39,7 @@ const NewExpenseForm = (props) => {
 
     const expenseData = {
       title: formTitle,
-      amount: formAmount,
+      amount: +formAmount,
       date: new Date(formDate),
     };
 
@@ -68,7 +68,7 @@ const NewExpenseForm = (props) => {
       </div>
       <div className="new-expense__actions">
         <button type="submit">Save</button>
-        <button onClick={props.cancelExpenseHandler}>Cancel</button>
+        <button onClick={props.hideForm}>Close</button>
       </div>
     </form>
   );

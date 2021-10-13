@@ -13,27 +13,28 @@ const NewExpense = (props) => {
     };
 
     props.onAddExpense(expenseData);
+    hideForm();
   };
 
-  const addExpenseHandler = () => {
+  const showForm = () => {
     setDisplayForm(true);
   };
 
-  const cancelExpenseHandler = () => {
+  const hideForm = () => {
     setDisplayForm(false);
   };
 
   if (!displayForm) {
     return (
         <div className="new-expense">
-            <button onClick={addExpenseHandler}>Add Expense</button>
+            <button onClick={showForm}>Add Expense</button>
         </div>
     );
   }
 
   return (
     <div className="new-expense">
-      <NewExpenseForm onSaveExpenseDate={saveExpenseHandler} cancelExpenseHandler={cancelExpenseHandler} />
+      <NewExpenseForm onSaveExpenseDate={saveExpenseHandler} cancelExpenseHandler={hideForm} />
     </div>
   );
 };
